@@ -9,8 +9,10 @@ var pet_info = {
   happiness: 8
 };
 
+var UNDERWEIGHT_WEIGHT = 5;
 var OVERFED_WEIGHT = 16;
 var NORMAL_PUP_IMAGE = "images/pixel-pup.svg";
+var UNDERWEIGHT_PUP_IMAGE = "images/Ozempicpixelpup.svg";
 var OVERFED_PUP_IMAGE = "images/Fat&Bald-pixelpup.svg";
 
 $(function() {
@@ -74,14 +76,21 @@ function checkWeightAndHappinessBeforeUpdating() {
 }
 
 function updatePetImage() {
+  var isUnderweight = pet_info.weight <= UNDERWEIGHT_WEIGHT;
   var isOverfed = pet_info.weight >= OVERFED_WEIGHT;
-  var image = isOverfed ? OVERFED_PUP_IMAGE : NORMAL_PUP_IMAGE;
-  var altText = isOverfed
-    ? "Pixel art dog named Jake looking fat and bald"
-    : "Pixel art dog named Jake sitting on a blue cushion";
-  var caption = isOverfed
-    ? "Jake needs more exercise!"
-    : "Jake is ready for attention!";
+  var image = NORMAL_PUP_IMAGE;
+  var altText = "Pixel art dog named Jake sitting on a blue cushion";
+  var caption = "Jake is ready for attention!";
+
+  if (isUnderweight) {
+    image = UNDERWEIGHT_PUP_IMAGE;
+    altText = "Pixel art dog named Jake looking very thin";
+    caption = "Jake needs a little more food!";
+  } else if (isOverfed) {
+    image = OVERFED_PUP_IMAGE;
+    altText = "Pixel art dog named Jake looking fat and bald";
+    caption = "Jake needs more exercise!";
+  }
 
   $(".pet-image").attr("src", image).attr("alt", altText);
   $(".pet-caption").text(caption);
