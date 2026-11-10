@@ -1,10 +1,10 @@
 /*
- * Mochi's Giga Pet
+ * Jake's Giga Pet
  * This project uses a JavaScript object to store the pet's changing values.
  */
 
 var pet_info = {
-  name: "Mochi",
+  name: "Jake",
   weight: 12,
   happiness: 8
 };
@@ -24,27 +24,27 @@ $(function() {
 function clickedTreatButton() {
   pet_info.happiness += 2;
   pet_info.weight += 1;
-  showNotification("Mochi says: Yum! That treat was delicious.");
+  showNotification("Jake says: Yum! That treat was delicious.");
   updatePetInfoInHtml();
 }
 
 function clickedPlayButton() {
   pet_info.happiness += 2;
   pet_info.weight -= 1;
-  showNotification("Mochi says: That game was pawsome!");
+  showNotification("Jake says: That game was pawsome!");
   updatePetInfoInHtml();
 }
 
 function clickedExerciseButton() {
   pet_info.happiness -= 1;
   pet_info.weight -= 2;
-  showNotification("Mochi says: I feel stronger already!");
+  showNotification("Jake says: I feel stronger already!");
   updatePetInfoInHtml();
 }
 
 function clickedGroomButton() {
   pet_info.happiness += 3;
-  showNotification("Mochi says: My fur looks fabulous!");
+  showNotification("Jake says: My fur looks fabulous!");
   updatePetInfoInHtml();
 }
 
