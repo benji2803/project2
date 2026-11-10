@@ -1,52 +1,87 @@
-$(function() { // Makes sure that your function is called once all the DOM elements of the page are ready to be used.
-    
-    // Called function to update the name, happiness, and weight of our pet in our HTML
-    checkAndUpdatePetInfoInHtml();
-  
-    // When each button is clicked, it will "call" function for that button (functions are below)
-    $('.treat-button').click(clickedTreatButton);
-    $('.play-button').click(clickedPlayButton);
-    $('.exercise-button').click(clickedExerciseButton);
-  
+/*
+ * Mochi's Giga Pet
+ * This project uses a JavaScript object to store the pet's changing values.
+ */
 
-  
-    
-  })
-  
-    // Add a variable "pet_info" equal to a object with the name (string), weight (number), and happiness (number) of your pet
-    var pet_info = {name:"My Pet Name", weight:"??", happiness:"??"};
-  
-    function clickedTreatButton() {
-      // Increase pet happiness
-      // Increase pet weight
-      checkAndUpdatePetInfoInHtml();
-    }
-    
-    function clickedPlayButton() {
-      // Increase pet happiness
-      // Decrease pet weight
-      checkAndUpdatePetInfoInHtml();
-    }
-    
-    function clickedExerciseButton() {
-      // Decrease pet happiness
-      // Decrease pet weight
-      checkAndUpdatePetInfoInHtml();
-    }
-  
-    function checkAndUpdatePetInfoInHtml() {
-      checkWeightAndHappinessBeforeUpdating();  
-      updatePetInfoInHtml();
-    }
-    
-    function checkWeightAndHappinessBeforeUpdating() {
-      // Add conditional so if weight is lower than zero.
-    }
-    
-    // Updates your HTML with the current values in your pet_info object
-    function updatePetInfoInHtml() {
-      $('.name').text(pet_info['name']);
-      $('.weight').text(pet_info['weight']);
-      $('.happiness').text(pet_info['happiness']);
-    }
-  
+var pet_info = {
+  name: "Mochi",
+  weight: 12,
+  happiness: 8
+};
+
+$(function() {
+  // jQuery's .on() method attaches an event handler to an element.
+  // It is useful here because each button can listen for a click and call
+  // the matching function whenever the player interacts with the pet.
+  $(".treat-button").on("click", clickedTreatButton);
+  $(".play-button").on("click", clickedPlayButton);
+  $(".exercise-button").on("click", clickedExerciseButton);
+  $(".groom-button").on("click", clickedGroomButton);
+
+  updatePetInfoInHtml();
+});
+
+function clickedTreatButton() {
+  pet_info.happiness += 2;
+  pet_info.weight += 1;
+  showNotification("Mochi says: Yum! That treat was delicious.");
+  updatePetInfoInHtml();
+}
+
+function clickedPlayButton() {
+  pet_info.happiness += 2;
+  pet_info.weight -= 1;
+  showNotification("Mochi says: That game was pawsome!");
+  updatePetInfoInHtml();
+}
+
+function clickedExerciseButton() {
+  pet_info.happiness -= 1;
+  pet_info.weight -= 2;
+  showNotification("Mochi says: I feel stronger already!");
+  updatePetInfoInHtml();
+}
+
+function clickedGroomButton() {
+  pet_info.happiness += 3;
+  showNotification("Mochi says: My fur looks fabulous!");
+  updatePetInfoInHtml();
+}
+
+function updatePetInfoInHtml() {
+  checkWeightAndHappinessBeforeUpdating();
+
+  $(".name").text(pet_info.name);
+  $(".weight").text(pet_info.weight);
+  $(".happiness").text(pet_info.happiness);
+  $(".mood").text(getMood());
+}
+
+function checkWeightAndHappinessBeforeUpdating() {
+  // These conditionals prevent either value from dropping below zero.
+  if (pet_info.weight < 0) {
+    pet_info.weight = 0;
+  }
+
+  if (pet_info.happiness < 0) {
+    pet_info.happiness = 0;
+  }
+}
+
+function getMood() {
+  if (pet_info.happiness >= 12) {
+    return "Overjoyed";
+  }
+
+  if (pet_info.happiness >= 7) {
+    return "Feeling curious";
+  }
+
+  return "Needs some love";
+}
+
+function showNotification(message) {
+  // jQuery's .fadeIn() method reveals the notification with a short
+  // animation instead of showing a browser alert or writing to the console.
+  $(".notification").text(message).fadeIn(250);
+}
