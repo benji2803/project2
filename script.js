@@ -9,6 +9,10 @@ var pet_info = {
   happiness: 8
 };
 
+var OVERFED_WEIGHT = 16;
+var NORMAL_PUP_IMAGE = "images/pixel-pup.svg";
+var OVERFED_PUP_IMAGE = "images/Fat&Bald-pixelpup.svg";
+
 $(function() {
   // jQuery's .on() method attaches an event handler to an element.
   // It is useful here because each button can listen for a click and call
@@ -55,6 +59,7 @@ function updatePetInfoInHtml() {
   $(".weight").text(pet_info.weight);
   $(".happiness").text(pet_info.happiness);
   $(".mood").text(getMood());
+  updatePetImage();
 }
 
 function checkWeightAndHappinessBeforeUpdating() {
@@ -66,6 +71,20 @@ function checkWeightAndHappinessBeforeUpdating() {
   if (pet_info.happiness < 0) {
     pet_info.happiness = 0;
   }
+}
+
+function updatePetImage() {
+  var isOverfed = pet_info.weight >= OVERFED_WEIGHT;
+  var image = isOverfed ? OVERFED_PUP_IMAGE : NORMAL_PUP_IMAGE;
+  var altText = isOverfed
+    ? "Pixel art dog named Jake looking fat and bald"
+    : "Pixel art dog named Jake sitting on a blue cushion";
+  var caption = isOverfed
+    ? "Jake needs more exercise!"
+    : "Jake is ready for attention!";
+
+  $(".pet-image").attr("src", image).attr("alt", altText);
+  $(".pet-caption").text(caption);
 }
 
 function getMood() {
